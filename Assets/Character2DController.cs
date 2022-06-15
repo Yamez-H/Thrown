@@ -4,12 +4,14 @@ public class Character2DController : MonoBehaviour
 {
     public float MovmentSpeed;
     public float JumpForce;
+    public float fireSpeed = 20;
 
     public ProjectileBehaviour projectilePrefab;
     public Transform LaunchOffset;
 
     private Rigidbody2D _rigidbody;
     private bool canJump = false;
+    public float fireCount = 20;
 
     // Start is called before the first frame update
     private void Start()
@@ -33,9 +35,11 @@ public class Character2DController : MonoBehaviour
             _rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
         }
 
-        if (Input.GetButton("Fire1"))
+        if ((Input.GetButton("Fire1")) && (fireCount >= fireSpeed))
         {
             Instantiate(projectilePrefab, LaunchOffset.position, transform.rotation);
+            fireCount = 0;
         }
+        fireCount++;
     }
 }
