@@ -35,7 +35,12 @@ public class Character2DController : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
-            Instantiate(projectilePrefab, LaunchOffset.position, transform.rotation);
+            LaunchProjectile();
         }
+    }
+
+    private void LaunchProjectile()
+    {
+        Instantiate(projectilePrefab, LaunchOffset.position, transform.rotation);
     }
 }
