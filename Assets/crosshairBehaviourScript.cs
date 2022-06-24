@@ -16,7 +16,8 @@ public class crosshairBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
+        //turn back on
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame

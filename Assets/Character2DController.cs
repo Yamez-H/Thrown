@@ -28,6 +28,10 @@ public class Character2DController : MonoBehaviour
     private void FixedUpdate()
     {
         var movment = Input.GetAxis("Horizontal");
+        if(movment < 0)
+        {
+            //transform.localEulerAngles = transform.eulerAngles + new Vector3(0, 180, -2 * transform.eulerAngles.z);
+        }
         transform.position += new Vector3(movment, 0, 0) * Time.deltaTime * MovmentSpeed;
 
         if (Input.GetButton("Jump") && Mathf.Abs(_rigidbody.velocity.y) < 0.001f)

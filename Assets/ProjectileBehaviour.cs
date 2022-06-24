@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
-
+    public float Damage = 5f;
     public float Speed = 4f;
     public float degrees;
     public float testX;
 
-    private void Update()
+    private void Start()
     {
         GameObject test = GameObject.Find("Crosshair");
         Vector2 pos = test.GetComponent <crosshairBehaviourScript>().crosshairPos;
@@ -17,12 +17,16 @@ public class ProjectileBehaviour : MonoBehaviour
         testX = distanceX;
 
         float distanceY = pos.y - transform.position.y;
-        float hyp = Mathf.Sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
+        /*float hyp = Mathf.Sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
 
         float angle = Mathf.Cos(distanceX / hyp);
-        degrees = angle * Mathf.Rad2Deg;
+        degrees = angle * Mathf.Rad2Deg;*/
+        degrees = Mathf.Atan2(distanceY, distanceX) * Mathf.Rad2Deg;
 
         transform.eulerAngles = Vector3.forward * degrees;
+
+
+        Debug.Log("degrees = " + degrees + "distanceX = " + distanceX + "distanceY" + distanceY);
     }
 
     private void FixedUpdate()
@@ -34,10 +38,19 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Enemy") == true)
         {
-            gameObject.SendMessage("ApplyDamage", 10.0);
+            GameObject enemy = collision.gameObject;
+            enemy.SendMessage("ApplyDamage", Damage);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
+        else if (collision.gameObject.tag.Equals("Player") == true)
+        {
+            
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
 }
