@@ -17,15 +17,15 @@ public class crosshairBehaviourScript : MonoBehaviour
     void Start()
     {
         //turn back on
-        //Cursor.visible = false;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         crosshairPos = mousePos;
-        crosshairPos = crosshairPos * (mouseSpeed );
+        crosshairPos = crosshairPos * (mouseSpeed);
         crosshairPos.x = (crosshairPos.x * (mouseSpeed * mouseSpeedX)) - mouseDeltaX;
         crosshairPos.y = (crosshairPos.y * (mouseSpeed * mouseSpeedY)) - mouseDeltaY;
         transform.position = crosshairPos;
