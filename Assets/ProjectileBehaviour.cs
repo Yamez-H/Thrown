@@ -7,27 +7,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public float degrees;
     public float testX;
 
-    private void Start()
-    {
-        GameObject test = GameObject.Find("Crosshair");
-        Vector2 pos = test.GetComponent <crosshairBehaviourScript>().crosshairPos;
-
-        float distanceX = pos.x - transform.position.x;
-
-        testX = distanceX;
-
-        float distanceY = pos.y - transform.position.y;
-        /*float hyp = Mathf.Sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
-
-        float angle = Mathf.Cos(distanceX / hyp);
-        degrees = angle * Mathf.Rad2Deg;*/
-        degrees = Mathf.Atan2(distanceY, distanceX) * Mathf.Rad2Deg;
-
-        transform.eulerAngles = Vector3.forward * degrees;
-
-
-        Debug.Log("degrees = " + degrees + "distanceX = " + distanceX + "distanceY" + distanceY);
-    }
+    private Rigidbody2D _rigidbody;
 
     private void FixedUpdate()
     {
@@ -40,14 +20,23 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             GameObject enemy = collision.gameObject;
             enemy.SendMessage("ApplyDamage", Damage);
+            //Debug.Log("enemy collision");
             Destroy(gameObject);
         }
         else if (collision.gameObject.tag.Equals("Player") == true)
         {
-            
+            GameObject player = collision.gameObject;
+            player.SendMessage("ApplyDamage", Damage);
+            Destroy(gameObject);
+            //Debug.Log("player collision");
+        }
+        else if (collision.gameObject.tag.Equals("Platform") == true)
+        {
+
         }
         else
         {
+            //Debug.Log("else destroy");
             Destroy(gameObject);
         }
         
