@@ -12,6 +12,7 @@ public class loadScoreStart : MonoBehaviour
     void Start()
     {
         //PlayerPrefs.SetFloat("Player High Score", 0);
+        Cursor.visible = true;
         LoadProgress();
         scoreText = GameObject.FindGameObjectWithTag("Score");
         string scoreString = "High Score: " + score.ToString();

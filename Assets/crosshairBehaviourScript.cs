@@ -17,7 +17,7 @@ public class crosshairBehaviourScript : MonoBehaviour
     void Start()
     {
         //turn back on
-        //Cursor.visible = false;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
