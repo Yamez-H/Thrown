@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Character2DController : MonoBehaviour
 {
+    public float score = 0;
     public float Maxhealth = 20;
     private float health;
 
@@ -26,6 +27,7 @@ public class Character2DController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         health = Maxhealth;
+        LoadProgress();
 
         var parent = GameObject.FindGameObjectWithTag("PlayerHUD").transform;
 
@@ -37,7 +39,10 @@ public class Character2DController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("StartScreen");
+        }
     }
 
     private void FixedUpdate()
@@ -93,10 +98,7 @@ public class Character2DController : MonoBehaviour
 
     private void LaunchProjectile(float degrees)
     {
-        //transform.eulerAngles = Vector3.forward * degrees;
-
-        Debug.Log("degrees = " + degrees);
-
+        //Debug.Log("degrees = " + degrees);
         Instantiate(projectilePrefab, LaunchOffset.position, Quaternion.Euler(0, 0, degrees));
     }
 
@@ -107,14 +109,34 @@ public class Character2DController : MonoBehaviour
 
     public void ApplyDamage(float damage)
     {
-        health = health - damage;
+        health -= damage;
+        LoadProgress();
+        score -= damage;
+        SaveProgress();
         float temp = health / Maxhealth;
         temp = Mathf.RoundToInt(temp * 6);
         ChangeSprite((int)temp);
         if (health <= 0)
         {
             //Destroy(gameObject);
+            score = 0;
+            SaveProgress();
             SceneManager.LoadScene("Level1");
         }
+    }
+
+    public void SaveProgress()
+    {
+        PlayerPrefs.SetFloat("Player Score", score);
+
+        if (PlayerPrefs.GetFloat("Player High Score") < score)
+        {
+            PlayerPrefs.SetFloat("Player High Score", score);
+        }
+    }
+
+    public void LoadProgress()
+    {
+        score = PlayerPrefs.GetFloat("Player Score");
     }
 }

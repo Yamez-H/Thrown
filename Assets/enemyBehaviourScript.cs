@@ -6,6 +6,7 @@ public class enemyBehaviourScript : MonoBehaviour
 {
     public float Maxhealth = 10;
     private float health;
+    private float score;
 
     public float speed = 10.0f;
     public float targetDistance = 5.0f;
@@ -41,7 +42,6 @@ public class enemyBehaviourScript : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 pos = Player.gameObject.transform.position;
-        //pos = pos.normalized;
         //float distance = findPlayerDistance(pos);
 
         if (Mathf.Abs(FindPlayerAngle(pos)) > 90)
@@ -66,8 +66,6 @@ public class enemyBehaviourScript : MonoBehaviour
 
     float FindPlayerDistance(Vector2 pos)
     {
-        //Vector2 pos = Player.GetComponent<crosshairBehaviourScript>().crosshairPos;
-
         float distanceX = pos.x - transform.position.x;
 
         float distanceY = pos.y - transform.position.y;
@@ -81,25 +79,18 @@ public class enemyBehaviourScript : MonoBehaviour
 
     float FindPlayerAngle(Vector2 pos)
     {
-        //Vector2 pos = Player.GetComponent<crosshairBehaviourScript>().crosshairPos;
-
         float distanceX = pos.x - transform.position.x;
 
         float distanceY = pos.y - transform.position.y;
 
         float degrees = Mathf.Atan2(distanceY, distanceX) * Mathf.Rad2Deg;
         return degrees;
-        //transform.eulerAngles = Vector3.forward * degrees;
 
         //Debug.Log("degrees = " + degrees + "distanceX = " + distanceX + "distanceY" + distanceY);
     }
 
     private void LaunchProjectile(float degrees)
     {
-        //transform.eulerAngles = Vector3.forward * degrees;
-
-        //Debug.Log("enemy degrees = " + degrees);
-
         Instantiate(projectilePrefab, LaunchOffset1.position, Quaternion.Euler(0, 0, degrees));
     }
 
@@ -110,6 +101,9 @@ public class enemyBehaviourScript : MonoBehaviour
 
     public void ApplyDamage(float damage)
     {
+        LoadProgress();
+        score += damage;
+        SaveProgress();
         health = health - damage;
         float temp = health / Maxhealth;
         temp = Mathf.RoundToInt(temp * 6);
@@ -118,5 +112,16 @@ public class enemyBehaviourScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Debug.Log("Score = " + score);
+    }
+
+    public void SaveProgress()
+    {
+        PlayerPrefs.SetFloat("Player Score", score);
+    }
+
+    public void LoadProgress()
+    {
+        score = PlayerPrefs.GetFloat("Player Score");
     }
 }

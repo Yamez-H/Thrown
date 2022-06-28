@@ -12,18 +12,12 @@ public class ProjectileBehaviour : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, 2);
     }
 
     private void FixedUpdate()
     {
         transform.position += Speed * Time.deltaTime * transform.right;
-
-        //float vel = Mathf.Sqrt(Mathf.Abs(_rigidbody.velocity.x * Mathf.Abs(_rigidbody.velocity.x + Mathf.Abs(_rigidbody.velocity.y * Mathf.Abs(_rigidbody.velocity.y)))));
-
-        Debug.Log("vel = " + _rigidbody.velocity.x);
-
-        //if (vel < 0.2f)
-          //  Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
