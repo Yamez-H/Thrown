@@ -8,6 +8,7 @@ TagManager:
   - Platform
   - PlayerHUD
   - Score
+  - Time
   layers:
   - Default
   - TransparentFX

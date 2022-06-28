@@ -6,6 +6,7 @@ public class Character2DController : MonoBehaviour
     public float score = 0;
     public float Maxhealth = 20;
     private float health;
+    private float time = 0;
 
     public float MovmentSpeed;
     public float JumpForce;
@@ -20,7 +21,6 @@ public class Character2DController : MonoBehaviour
     public Sprite[] spriteArray;
 
     private Rigidbody2D _rigidbody;
-    //private bool canJump = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -41,6 +41,7 @@ public class Character2DController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SaveProgress();
             SceneManager.LoadScene("StartScreen");
         }
     }
@@ -62,7 +63,8 @@ public class Character2DController : MonoBehaviour
         {
             _rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
         }
-
+        time += Time.deltaTime;
+        //Debug.Log("Time = " + time);
         fireCount -= Time.deltaTime;
         if ((Input.GetButton("Fire1")) && (fireCount <= 0.0f))
         {
@@ -74,7 +76,7 @@ public class Character2DController : MonoBehaviour
 
     private bool CrosshairSide(float degrees)
     {
-        bool side = false; //fasle = right, true = left
+        bool side = false; //false = right, true = left
 
         degrees = Mathf.Abs(degrees);
         if (degrees > 90)
@@ -115,6 +117,8 @@ public class Character2DController : MonoBehaviour
         SaveProgress();
         float temp = health / Maxhealth;
         temp = Mathf.RoundToInt(temp * 6);
+        if (temp <= 0 && health > 0)
+            temp++;
         ChangeSprite((int)temp);
         if (health <= 0)
         {
@@ -128,6 +132,7 @@ public class Character2DController : MonoBehaviour
     public void SaveProgress()
     {
         PlayerPrefs.SetFloat("Player Score", score);
+        PlayerPrefs.SetFloat("Player Time", time);
 
         if (PlayerPrefs.GetFloat("Player High Score") < score)
         {

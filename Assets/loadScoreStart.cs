@@ -11,16 +11,11 @@ public class loadScoreStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //PlayerPrefs.SetFloat("Player High Score", 0);
         LoadProgress();
         scoreText = GameObject.FindGameObjectWithTag("Score");
         string scoreString = "High Score: " + score.ToString();
         scoreText.GetComponent<UnityEngine.UI.Text>().text = scoreString;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void LoadProgress()

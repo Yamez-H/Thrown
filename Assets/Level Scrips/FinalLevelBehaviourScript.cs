@@ -32,6 +32,11 @@ public class FinalLevelBehaviourScript : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player") == true && win == true)
         {
+            if (PlayerPrefs.GetFloat("Player Lowest Time") > PlayerPrefs.GetFloat("Player Time"))
+            {
+                PlayerPrefs.SetFloat("Player Lowest Time", PlayerPrefs.GetFloat("Player Time"));
+                Debug.Log("Saved Time");
+            }
             SceneManager.LoadScene("StartScreen");
             //Debug.Log("player door collision");
         }
