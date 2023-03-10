@@ -5,4 +5,4 @@ Music from Dungreed
 
 Assesets made by Blackspire, Krishna Palacio and Yamez
 
-All Scripts made with C# by Yames (James Holloway)
+All Scripts made with C# by Yamez (James Holloway)
